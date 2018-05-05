@@ -1,0 +1,142 @@
+/** GENÉRICO */
+@font-face {
+        font-family: 'TypoGrotesk';
+        src: 
+                url('TypoGroteskDemo.otf') format('opentype'), /* Chrome 26+, Opera 23+ */
+                url('TypoGroteskDemo.otf') format('opentype'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+body {background-color: #F9F9F9; margin:0 auto; scroll-behavior: smooth;}
+
+h1, h2, h3, h4, h5, h6 {font-family: TypoGrotesk, Arial, Helvetica, sans-serif;}
+h1 {font-size: 2em; margin: 0;}
+p {font-family: Arial, Helvetica, sans-serif;}
+
+a { text-decoration: none; text-decoration: underline; color: #0063dc;}
+q {quotes: "\00AB" "\00BB" '"' '"' "'" "'";}
+
+/* Hace que un contenedor con elementos float se comporte como un bloque entero */
+.clearfix:after { content: ""; display: table; clear: both;}
+
+.ocultar {position: absolute; left: -999em; /* Equivalente a display: none; pero no lo oculta para los lectores de pantalla */}
+
+/* Alinea en horizontal los elementos de una lista */
+ul.lista_horizontal {list-style: none; padding: 0; text-align: center;}
+ul.lista_horizontal li {display: inline-block;}
+
+/* Tacha el texto */
+.tachado {text-decoration: line-through;}
+/* Pone un tick verde de "hecho" después del texto donde se use */
+.done::after {color: green; content: '\2713'; display: inline-block; font-weight: bold; padding-left: 0.2em; text-decoration: none !important;}
+.cursiva {font-style: italic;}
+/** CABECERA */
+header {background-color: #F1F1F1; border-bottom: 1px #DDD solid; display: block; padding: 0; text-align: center;}
+header h2 {display: inline;
+	font-family: TypoGrotesk, Arial, Helvetica, sans-serif; font-size: 3em;
+	margin: 0; padding-top: 0.5em;
+	text-transform : uppercase;
+}
+header h2 span { position: absolute; left: -999em; /* Equivalente a display: none; pero no lo oculta para los lectores de pantalla */}
+header h2:hover {text-transform : none; /* Eliminamos las mayúsculas para dejarlas solo en las iniciales */}
+header h2:hover span {position: inherit; left: inherit; /* Muestra los caracteres ocultos cuando no se hace hover */}
+header h2 a {color: inherit; text-decoration: none;}
+.header_contenedor {display: inline; font-family: TypoGrotesk, Arial, Helvetica, sans-serif; font-size: 3em;}
+#header_social {margin: 0.5em 0 0 0;}
+#header_social li {background: 0px 0px no-repeat; color: #333; display: inline-block; font-family: "helvetica neue","Helvetica",arial,sans-serif; line-height: 30px; margin-right: 1.2em; min-height: 35px; padding-left: 32px; text-decoration: none;}
+#header_social .linkedin { background-image: url("icons/linkedin-square.svg"); background-size: 30px 30px;}
+#header_social .twitter {background-image: url("icons/twitter-square.svg"); background-size: 30px 30px;}
+#header_social .github {background-image: url("icons/github-square.svg"); background-size: 30px 30px;}
+#header_social .mail {background-image: url("icons/mail-square.svg"); background-size: 30px 30px;}
+#header_social li a, #header_social li a:visited {color: #333; text-decoration: none;}
+#header_social li a:hover {text-decoration: underline;}
+
+
+/** MAIN */
+
+main {display: block; margin: 0 auto; text-align: center; overflow: auto; /* clearfix ultimate */}
+
+/** Menú */
+#main_menu {border-bottom: 1px #DDD solid; padding-top: 1em;}
+.main_menu_topic {
+    border-bottom: 3px #F9F9F9 solid;
+    color: inherit;
+    display: inline-block;
+	max-width: 220px;
+    min-height: 8em;
+    text-decoration: none;
+    vertical-align: text-top;
+}
+.main_menu_topic + .main_menu_topic {margin-left: 3em;}
+.main_menu_topic h3 {font-size: 1.5em; margin: 0;}
+#main_menu .seleccionado, .main_menu_topic:hover {border-bottom: 3px #008DD2 solid;}
+
+
+/** Contenido */
+main > section {margin: 0 auto; padding: 2em 5em; text-align: center;}
+.fix_column { max-width: 1000px; text-align: left;}
+
+.content_minibox, .content_minibox_2, .content_minibox_2x2 {
+    background: #FFF;
+    border: 1px #DDD solid;
+	box-shadow: 0 0 8px #DDD;
+    color: #000;
+    display: block;
+    float: left;
+    height: 270px;
+    margin: 0 24px 1em 0;
+    padding: 0 5px;
+    text-decoration: none;
+    width: 260px;
+}
+.content_minibox:hover, .content_minibox_2:hover, .content_minibox_2x2:hover {
+    border: 1px #AAA solid;
+	box-shadow: 0 0 10px #AAA;
+}
+.content_minibox_2 {width: 546px;}
+.content_minibox_2x2 {height: 540px; width: 556px; }
+
+.content_minibox h2, .content_minibox_2 h2, .content_minibox_2x2 h2 {font-size: 1em; font-weight: 600;}
+.content_minibox p, .content_minibox_2 p, .content_minibox_2x2 p { font-size: 0.9em;}
+
+/** FOOTER */
+.goTop { padding: 1em 5em; text-align:right;}
+
+
+/** PORTADA */
+#content_social li + li {padding: 0 0 0 2em;}
+#content_social img { height: 4em; width: 4em;}
+
+
+/** ESTILOS ANCHO (520, 1050] */
+@media (min-width: 520px) and (max-width: 1050px) {
+	/** MAIN */
+	#main_content {padding: 2em 1em 2em 1em;}
+	
+    .main_menu_topic {min-height: 2em;}
+    .main_menu_topic p {display:none;}
+	
+	main > section {margin: 0 auto; padding: 1em 4em;}
+	
+	/** PORTADA */
+	#content_social img { height: 3em; width: 3em;}
+}
+
+
+/** ESTILOS ANCHO < 520 */
+@media (max-width: 520px) {
+	/** MAIN */
+    #main_content {padding: 1em;}
+    
+	.main_menu_topic {min-height: 2em;}
+    .main_menu_topic p {display:none;}
+	
+	.content_minibox, .content_minibox_2, .content_minibox_2x2 { height: auto; width: 260px;}
+	.content_minibox, .content_minibox_2, .content_minibox_2x2 img { width: inherit; }
+	.content_minibox_2 {width: 260px;}
+	.content_minibox_2x2 {height: auto; width: 260px; }
+	
+	main > section {margin: 0 auto; padding: 1em;}
+	
+	/** PORTADA */
+	#content_social img { height: 2em; width: 2em;}
+}
