@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+	<title>Informatica Powercenter Target To Source</title>
+	<meta charset="utf-8" />
+	<meta name="description" content="Esta página te permite convertir uno o varios target de Informatica Powercenter a source." />
+    <meta name="keywords" content="Informatica Powercenter, Target, Source, convertir" />
+	<meta name="copyright" content="Copyright (c) 2018 Alejandro Moreno Calvo">
+	<!-- Etiquetas Open graph -->
+	<meta property="og:title" content="Informatica Powercenter Target To Source" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://www.almorca.es/proyectos/BI/TargetToSource.html" />
+	<meta property="og:locale" content="es_ES" />
+	<meta property="og:description" content="Esta página te permite convertir uno o varios target de Informatica Powercenter a source." />
+	<!-- Twitter cards -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@almorca_es" />
+	<meta name="twitter:creator" content="@almorca_es" />
+	<link href="../../css/style.css" media="all" rel="stylesheet" type="text/css" />
+<style>
+	main { text-align: center; padding-top: 1em;}
+	main > p {display: inline-block; max-width: 65em;}
+	main > p[lang]:before {color: #666; content:" [" attr(lang) "]"; font-weight:bold; padding-right: 0.5em; text-transform: uppercase;} /* Muestra el idioma de un enlace a continuacion de este */
+	main > #drop_zone {
+    border: 5px dashed #bbb;
+    border-radius: 5px;
+	margin: 2em 1em;
+    padding: 3em;
+    text-align: center;
+    color: #bbb;
+	}
+</style>
+</head>
+<body>
+	<header>
+		<span class="header_contenedor" aria-hidden="true">&#171;</span>
+		<h2><a href="http://www.almorca.es" class="u-url" rel="home">Al<span>ejandro </span>Mor<span>eno </span>Ca<span>lvo</span></a></h2>
+		<span class="header_contenedor" aria-hidden="true">&#187;</span>
+		<ul id="header_social">
+			<li class="linkedin"><a href="https://www.linkedin.com/in/alejandromorenocalvo" title="Alejandro Moreno Calvo en LinkedIn" class="u-url" rel="me">LinkedIn</a></li>
+			<li class="twitter"><a href="https://twitter.com/almorca_es" title="@almorca_es en Twitter" class="u-url" rel="me">@almorca_es</a></li>
+			<li class="mail"><a href="mailto:almorca@almorca.es" class="u-email" rel="me">almorca@almorca.es</a></li>
+			<li class="github"><a href="https://github.com/Almorca" class="u-url" rel="me">Almorca en Github</a></li>
+			<li class="ocultar"><a href="https://getpocket.com/@almorca" class="u-url" rel="me">Mi perfil en Pocket</a></li>
+			<li class="ocultar"><a href="https://theoldreader.com/profile/Almorca" class="u-url" rel="me">Mi perfil en The old reader</a></li>
+			<li class="ocultar"><a href="https://www.flickr.com/photos/almorca/" class="u-url" rel="me">Mi perfil en Flickr</a></li>
+		</ul>
+	</header>
+	<main>
+	<h1>Informatica Powercenter Target To Source</h1>
+	<!--<form name="documentation">
+	  <label for="xml_files">XML Target: 
+		<input type="file" name="xml_files[]" id="xml" />
+	  </label>
+	</form>-->
+	<div id="drop_zone">
+		Drag and drop
+	</div>
+
+	<script>
+		<!--
+		/**
+		Informatica Powercenter Target to Source
+		
+		Copyright (c) 2018 Alejandro Moreno Calvo
+
+		Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+		The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+		*/
+		/* VARIABLES GLOBALES */
+		var _version = '0.1'
+		
+		/** Clase que permite gestionar un texto en formato XML. 
+		*/
+		class JSXML {
+			constructor(xmlText) {
+				this.xml = new DOMParser();
+				this.xml.parseFromString(xmlText, "text/xml");
+			}
+			
+			getTargets() {
+				return this.xml.getElementsByTagName('TARGET');
+			}
+		}
+	  
+	  
+		/* FUNCIONES GENÉRICAS */
+		
+		/** Se convierte un target en un source.
+			Las instrucciones para hacerlo son:
+			* Cambiar TARGET por SOURCE
+			* Eliminar atributo CONSTRAINT
+			* Eliminar atributo TABLEOPTIONS
+			* Si es de tipo fichero:
+				- Eliminar atributo ISFILENAMEFIELD
+				- Eliminar las líneas del final que comienzan por TABLEATTRIBUTE.
+				- Añadir después del nodo FLATFILE los siguientes nodos:
+					<TABLEATTRIBUTE NAME ="Base Table Name" VALUE =""/>
+					<TABLEATTRIBUTE NAME ="Search Specification" VALUE =""/>
+					<TABLEATTRIBUTE NAME ="Sort Specification" VALUE =""/>
+					<TABLEATTRIBUTE NAME ="Datetime Format" VALUE ="A  10 DD/MM/YYYY"/>
+					<TABLEATTRIBUTE NAME ="Thousand Separator" VALUE ="None"/>
+					<TABLEATTRIBUTE NAME ="Decimal Separator" VALUE ="."/>
+					<TABLEATTRIBUTE NAME ="Add Currently Processed Flat File Name Port" VALUE ="NO"/>
+				- Añadir DBDNAME ="FlatFile" después de DATABASETYPE ="Flat File" del SOURCE
+				- Comprobar si hay un campo Filename para borrarlo.
+				- Cambiar SKIPROWS ="0" a SKIPROWS ="1" si el fichero tiene cabecera.
+			* Si es de tipo Base de datos
+				- Añadir DBDNAME ="" en la etiqueta SOURCE
+
+		
+			@param xmlText Texto xml que contiene 1 o más target
+			@param dbname	Database Name. Todos los sources se van a crear con el mismo. Por defecto: Flat_File
+		*/
+		function convertirTargetSource(xmlText, dbname='Flat_File') {
+			var xmlParser = new DOMParser();
+			var xmlDoc = xmlParser.parseFromString(xmlText, "text/xml");
+			
+			var targets = xmlDoc.getElementsByTagName('TARGET');
+			
+			console.log('Comienzo de la conversión de target a source');
+			
+			for(var i = 0; i < targets.length; i++) {			
+				/** Eliminar atributo CONSTRAINT */
+				targets[i].removeAttribute('CONSTRAINT');
+				
+				/** Eliminar atributo TABLEOPTIONS */
+				targets[i].removeAttribute('TABLEOPTIONS');
+				
+				switch(targets[i].getAttribute('DATABASETYPE')) {
+					case 'Flat File':
+						console.log('El target corresponde a un fichero plano');
+						/**
+						- Añadir después del nodo FLATFILE los siguientes nodos:
+							<TABLEATTRIBUTE NAME ="Base Table Name" VALUE =""/>
+							<TABLEATTRIBUTE NAME ="Search Specification" VALUE =""/>
+							<TABLEATTRIBUTE NAME ="Sort Specification" VALUE =""/>
+							<TABLEATTRIBUTE NAME ="Datetime Format" VALUE ="A  10 DD/MM/YYYY"/>
+							<TABLEATTRIBUTE NAME ="Thousand Separator" VALUE ="None"/>
+							<TABLEATTRIBUTE NAME ="Decimal Separator" VALUE ="."/>
+							<TABLEATTRIBUTE NAME ="Add Currently Processed Flat File Name Port" VALUE ="NO"/>
+						*/
+						var nodo = document.createElement('TABLEATTRIBUTE');
+						nodo.setAttribute('NAME', 'Base Table Name');
+						nodo.setAttribute('VALUE', '');
+						var ref = targets[i].getElementsByTagName('TARGETFIELD')[0];	
+						insertBefore(nodo, ref);
+						
+						break;
+					case 'Oracle':
+						console.log('El target corresponde una tabla Oracle');
+						break;
+				}
+				
+				/** Añadir DBDNAME ="" en el nodo raíz del target */
+				targets[i].setAttribute('DBDNAME', dbname);
+				
+				/** Se cambia TARGET por SOURCE */
+				targets[i].outerHTML = targets[i].outerHTML.replace(/TARGET/g,"SOURCE");
+			}
+			
+			return new XMLSerializer().serializeToString(xmlDoc);
+		}
+		
+		
+		/** Función que descarga un conjunto de datos pasado como string
+			Código obtenido de 
+			https://ourcodeworld.com/articles/read/189/how-to-create-a-file-and-generate-a-download-with-javascript-in-the-browser-without-a-server
+			@param	filename	Nombre del fichero de salida
+			@param	text	Texto plano que forma el contenido del fichero
+		*/
+		function download(filename, text) {
+			var element = document.createElement('a');
+			element.setAttribute('href', 'data:text/xml;charset=utf-8,' + encodeURIComponent(text));
+			element.setAttribute('download', filename);
+
+			element.style.display = 'none';
+			document.body.appendChild(element);
+
+			element.click();
+
+			document.body.removeChild(element);
+		}	
+
+		/** Se procesa un fichero XML que contiene target de Powercenter */
+		function procesarXMLTarget(evt) {
+			evt.stopPropagation();
+			evt.preventDefault();
+			
+			console.log('Se empieza a procesar el fichero XML');
+			
+			// Se obtiene el listado de ficheros
+			var ficheros = evt.dataTransfer.files;
+			
+			
+			var reader = new FileReader();	
+			reader.onload = function(file) {
+				console.log('Fichero XML leído');
+				var Source = convertirTargetSource(file.target.result);
+				
+				download('source.xml', Source);
+			};
+			reader.readAsText(ficheros[0]);
+		}
+		
+		function handleDragOver(evt) {
+			evt.stopPropagation();
+			evt.preventDefault();
+			evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+		}
+
+		// Se añade los eventos para gestionar la lectura de ficheros.
+		var dropZone = document.getElementById('drop_zone');
+		dropZone.addEventListener('dragover', handleDragOver, false);
+		dropZone.addEventListener('drop', procesarXMLTarget, false);
+	   //-->
+	</script>
+	<p lang="es">Esta página te permite convertir uno o varios target de Informatica Powercenter a source. Exporta los target a un fichero xml, suéltalo en el recuadro de arriba y descarga el fichero source.xml resultante.<br />
+	<strong>¿Te ha sido útil?</strong> <a href="paypal.me/almorca/2">Invítame a un café</a> <span style="padding: 0 0.5em;">&#9642;</span> <strong>¿Tienes dudas o problemas?</strong> Escríbeme a <a href="mailto:almorca@almorca.es">almorca@almorca.es</a></p>
+	<p lang="en">A very easy  way to create the source definition from the target... just drag and drop a xml file above and download the source.xml file.<br />
+	<strong>Useful?</strong> <a href="paypal.me/almorca/2">Buy me a coffee</a>  <span style="padding: 0 0.5em;">&#9642;</span> <strong>Any problems?</strong> Contact me at <a href="mailto:almorca@almorca.es">almorca@almorca.es</a></p>
+	</main>
+</body>
+</html>
