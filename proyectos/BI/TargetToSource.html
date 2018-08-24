@@ -131,6 +131,20 @@
 				switch(targets[i].getAttribute('DATABASETYPE')) {
 					case 'Flat File':
 						console.log('El target corresponde a un fichero plano');
+						
+						/** Eliminar atributo ISFILENAMEFIELD */
+						var nodoAux = targets[i].getElementsByTagName('ISFILENAMEFIELD');
+						if (nodoAux.length > 0) {
+							nodoAux[0].remove();
+						}
+						
+						/** Eliminar atributos TABLEATTRIBUTE */
+						var k = targets[i].getElementsByTagName('TABLEATTRIBUTE').length;
+						var nodoAux = targets[i].getElementsByTagName('TABLEATTRIBUTE');
+						for (var j=0; j < k; j++) {
+							targets[i].removeChild(nodoAux[0]);
+						}
+						
 						/**
 						- Añadir después del nodo FLATFILE los siguientes nodos:
 							<TABLEATTRIBUTE NAME ="Base Table Name" VALUE =""/>
@@ -141,12 +155,46 @@
 							<TABLEATTRIBUTE NAME ="Decimal Separator" VALUE ="."/>
 							<TABLEATTRIBUTE NAME ="Add Currently Processed Flat File Name Port" VALUE ="NO"/>
 						*/
-						var nodo = document.createElement('TABLEATTRIBUTE');
-						nodo.setAttribute('NAME', 'Base Table Name');
-						nodo.setAttribute('VALUE', '');
-						var ref = targets[i].getElementsByTagName('TARGETFIELD')[0];	
-						insertBefore(nodo, ref);
-						
+						var nodo = document.createElementNS(null, 'TABLEATTRIBUTE');
+						nodo.setAttributeNS(null, 'NAME', 'Base Table Name');
+						nodo.setAttributeNS(null, 'VALUE', '');
+						var ref = targets[i].getElementsByTagName('TARGETFIELD')[0];
+						ref.parentNode.insertBefore(nodo, ref);
+						ref = nodo;
+						nodo = document.createElementNS(null, 'TABLEATTRIBUTE');
+						nodo.setAttributeNS(null, 'NAME', 'Search Specification');
+						nodo.setAttributeNS(null, 'VALUE', '');
+						ref = targets[i].getElementsByTagName('TARGETFIELD')[0];
+						ref.parentNode.insertBefore(nodo, ref);
+						ref = nodo;
+						nodo = document.createElementNS(null, 'TABLEATTRIBUTE');
+						nodo.setAttributeNS(null, 'NAME', 'Sort Specification');
+						nodo.setAttributeNS(null, 'VALUE', '');
+						ref = targets[i].getElementsByTagName('TARGETFIELD')[0];
+						ref.parentNode.insertBefore(nodo, ref);
+						ref = nodo;
+						nodo = document.createElementNS(null, 'TABLEATTRIBUTE');
+						nodo.setAttributeNS(null, 'NAME', 'Datetime Format');
+						nodo.setAttributeNS(null, 'VALUE', 'A  10 DD/MM/YYYY');
+						ref = targets[i].getElementsByTagName('TARGETFIELD')[0];
+						ref.parentNode.insertBefore(nodo, ref);
+						ref = nodo;
+						nodo = document.createElementNS(null, 'TABLEATTRIBUTE');
+						nodo.setAttributeNS(null, 'NAME', 'Thousand Separator');
+						nodo.setAttributeNS(null, 'VALUE', 'None');
+						ref = targets[i].getElementsByTagName('TARGETFIELD')[0];
+						ref.parentNode.insertBefore(nodo, ref);
+						ref = nodo;
+						nodo = document.createElementNS(null, 'TABLEATTRIBUTE');
+						nodo.setAttributeNS(null, 'NAME', 'Decimal Separator');
+						nodo.setAttributeNS(null, 'VALUE', '.');
+						ref.parentNode.insertBefore(nodo, ref);
+						ref = nodo;
+						var nodo = document.createElementNS(null, 'TABLEATTRIBUTE');
+						nodo.setAttributeNS(null, 'NAME', 'Add Currently Processed Flat File Name Port');
+						nodo.setAttributeNS(null, 'VALUE', 'NO');
+						var ref = targets[i].getElementsByTagName('TARGETFIELD')[0];
+						ref.parentNode.insertBefore(nodo, ref);
 						break;
 					case 'Oracle':
 						console.log('El target corresponde una tabla Oracle');
@@ -154,13 +202,14 @@
 				}
 				
 				/** Añadir DBDNAME ="" en el nodo raíz del target */
-				targets[i].setAttribute('DBDNAME', dbname);
+				targets[i].setAttributeNS(null, 'DBDNAME', dbname);
 				
 				/** Se cambia TARGET por SOURCE */
 				targets[i].outerHTML = targets[i].outerHTML.replace(/TARGET/g,"SOURCE");
 			}
 			
-			return new XMLSerializer().serializeToString(xmlDoc);
+			// Eliminamos los espacios en blanco que se crean al eliminar nodos y añado saltos de línea tener cada nodo en una línea
+			return new XMLSerializer().serializeToString(xmlDoc).replace(/^\s*\n/gm, "").replace(/></gm, ">\n<");
 		}
 		
 		
