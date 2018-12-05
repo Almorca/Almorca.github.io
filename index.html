@@ -36,34 +36,22 @@
 		</ul>
 	</header>
 	<main>
-		<aside id="main_menu" itemscope itemtype="http://schema.org/BreadcrumbList">
-		<a class="main_menu_topic" href="#trabajo" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-			<div itemscope itemtype="http://schema.org/Thing" itemprop="item">
-			<h3 itemprop="name">Trabajo</h3>
-			<p itemprop="description">Analista informático especializado en Business Intelligence</p>
-			</div>
-			<meta itemprop="position" content="1" />
+		<aside id="main_menu">
+		<a class="main_menu_topic" href="#trabajo">
+			<h3>Trabajo</h3>
+			<p>Analista informático especializado en Business Intelligence</p>
 		</a>
-		<a class="main_menu_topic" href="#software_libre" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-			<div itemscope itemtype="http://schema.org/Thing" itemprop="item">
-			<h3 itemprop="name">Software libre</h3>
-			<p itemprop="description">Proyectos de software libre en los que participo</p>
-			</div>
-			<meta itemprop="position" content="2" />
+		<a class="main_menu_topic" href="#software_libre">
+			<h3>Software libre</h3>
+			<p>Proyectos de software libre en los que participo</p>
 		</a>
-		<a class="main_menu_topic" href="#ocio" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-			<div itemscope itemtype="http://schema.org/Thing" itemprop="item">
-			<h3 itemprop="name">Ocio</h3>
-			<p itemprop="description">Espacio para mis aficiones: fotografía, triatlón, diseño web&#8230;</p>
-			</div>
-			<meta itemprop="position" content="3" />
+		<a class="main_menu_topic" href="#ocio">
+			<h3>Aficiones</h3>
+			<p>Espacio para mis aficiones: fotografía, triatlón, diseño web&#8230;</p>
 		</a>
-		<a class="main_menu_topic" href="#miscelanea" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-			<div itemscope itemtype="http://schema.org/Thing" itemprop="item">
-			<h3 itemprop="name">Miscelánea</h3>
-			<p itemprop="description"><q>Mixto, vario, compuesto de cosas distintas o de géneros diferentes</q>. Pues eso</p>
-			</div>
-			<meta itemprop="position" content="4" />
+		<a class="main_menu_topic" href="#miscelanea">
+			<h3>Miscelánea</h3>
+			<p><q>Mixto, vario, compuesto de cosas distintas o de géneros diferentes</q>. Pues eso</p>
 		</a>
 		</aside>
 		<section class="fix_column">
@@ -138,5 +126,75 @@
 	<footer>
 		<div class="goTop"><a href="#top" title="Subir al inicio de la p&aacute;gina">Arriba <span>&uarr;</span></a></div>
 	</footer>
+	<!-- Metadatos para buscadores. -->
+	<script type="applicaton/ld+json">
+	{
+		"@context": "http://schema.org",
+		"@graph":
+		[
+			{
+				"@type": "Person",
+				"name": "Alejandro Moreno Calvo",
+				"alternateName": "Almorca",
+				"url": "http://www.almorca.es",
+				"email": "almorca@almorca.es",
+				"sameAs": [
+					"https://www.linkedin.com/in/alejandromorenocalvo",
+					"https://github.com/Almorca",
+					"https://twitter.com/almorca_es",
+					"https://getpocket.com/@almorca",
+					"https://theoldreader.com/profile/Almorca"
+					]
+			},
+			{
+			 "@context": "http://schema.org",
+			 "@type": "BreadcrumbList",
+			 "itemListElement":
+			 [
+			  {
+			   "@type": "ListItem",
+			   "position": 1,
+			   "item":
+			   {
+				"@id": "http://www.almorca.es/#trabajo",
+				"name": "Trabajo",
+			"description": "Analista informático especializado en Business Intelligence"
+				}
+			  },
+			  {
+			   "@type": "ListItem",
+			  "position": 2,
+			  "item":
+			   {
+				 "@id": "http://www.almorca.es/#software_libre",
+				 "name": "Software libre",
+			"description": "Proyectos de software libre en los que participo"
+			   }
+			},
+			 {
+			   "@type": "ListItem",
+			  "position": 3,
+			  "item":
+			   {
+				 "@id": "http://www.almorca.es/#ocio",
+				 "name": "Aficiones",
+			"description": "Espacio para mis aficiones: fotografía, triatlón, diseño web&#8230;"
+			   }
+			},
+			{
+			   "@type": "ListItem",
+			  "position": 4,
+			  "item":
+			   {
+				 "@id": "http://www.almorca.es/#ocio",
+				 "name": "Miscelánea",
+			"description": "<q>Mixto, vario, compuesto de cosas distintas o de géneros diferentes</q>. Pues eso"
+			   }
+			  }
+			 ]
+			}
+		]
+	}
+	</script>
 </body>
 </html>
