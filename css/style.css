@@ -98,7 +98,7 @@ main > section {margin: 0 auto; padding: 2em 5em; text-align: center;}
 .content_minibox p, .content_minibox_2 p, .content_minibox_2x2 p { font-size: 0.9em;}
 
 /** FOOTER */
-.goTop { padding: 1em 3em; text-align:right;}
+.goTop { background-color: #F9F9F9; padding: 1em; position: fixed; bottom: 0; right: 1em;}
 
 
 /** PORTADA */
