@@ -104,6 +104,7 @@ main > section {margin: 0 auto; padding: 2em 5em; text-align: center;}
 /** PORTADA */
 #content_social li + li {padding: 0 0 0 2em;}
 #content_social img { height: 4em; width: 4em;}
+#content_social img:hover {background-color: #E6EFFC; border-radius: 10px;}
 
 
 /** ESTILOS ANCHO (520, 1050] */
