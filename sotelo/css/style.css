@@ -1,0 +1,286 @@
+/** Estilos comunes */
+
+
+
+@font-face {
+    font-family: 'Junction';
+    src: url('fonts/junction-bold.eot');
+    src: url('fonts/junction-bold.eot?#iefix') format('embedded-opentype'),
+         url('fonts/junction-bold.woff') format('woff'),
+         url('fonts/junction-bold.ttf') format('truetype'),
+         url('fonts/junction-bold.svg#junctionbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Junction';
+    src: url('fonts/junction-light.eot');
+    src: url('fonts/junction-light.eot?#iefix') format('embedded-opentype'),
+         url('fonts/junction-light.woff') format('woff'),
+         url('fonts/junction-light.ttf') format('truetype'),
+         url('fonts/junction-light.svg#junctionlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Junction';
+    src: url('fonts/junction-regular.eot');
+    src: url('fonts/junction-regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts/junction-regular.woff') format('woff'),
+         url('fonts/junction-regular.ttf') format('truetype'),
+         url('fonts/junction-regular.svg#junctionregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/** Ocultar elementos. Ver https://css-tricks.com/comparing-various-ways-to-hide-things-in-css/ */
+.hide-accessible, .visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
+
+
+/** Diseño general */
+/** Colores
+#8a2186: morado
+
+#b000ff: morado claro
+#EAE733: Amarillo
+
+
+*/
+
+body { 
+	margin: 0;
+	font-family: Junction, TypoGrotesk , "Helvetica Neue", Helvetica, Arial, sans-serif;
+	vertical-align: baseline;
+}
+
+.flex-50 {
+	width: calc(50% - 1em);
+}
+
+
+/*------------- HEADER ------------------*/
+header {
+	background: #fff;
+	box-shadow: 0 4px 4px rgba(51,51,51,.04),0 4px 56px rgba(51,51,51,.16);
+	display: flex;
+	margin: 0;
+	padding: 20px 70px !important;
+}
+
+.header_logo a {
+  background: url("../imagenes/logo.png") no-repeat left center/contain;
+  display: block;
+  width: 75px;
+  height: 70px;
+  text-indent: -9000px;
+  white-space: nowrap;
+}
+
+header .header_content {
+	display: flex;
+	margin: 0 auto;
+}
+
+header nav {
+	display: flex;
+	padding: 20px 0;}
+
+#header_menu {
+	display: flex;
+	box-sizing: border-box;
+	align-items: center;
+	font-size: 16px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin: 0 4em;
+	list-style: none;
+}
+
+#header_menu li {
+	display: list-item;
+	line-height: 24px;
+}
+
+#header_menu li + li {
+	margin-left: 4em;
+}
+
+#header_menu a {
+	text-decoration: none;
+	padding-left: 13.4px;
+}
+
+#header_menu a:hover {
+	padding-left: 0px;
+}
+
+#header_menu a:hover::before {
+	border: solid black;
+	border-width: 0 3px 3px 0;
+	display: inline-block;
+	padding: 3px;
+	margin: 0 5px 2px 0;
+	transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+	content: "";
+}
+
+.header_search {
+	display: flex;
+	font-size: 16px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin-left: 4em;
+	padding: 20px 0;
+}
+
+/*------------- MAIN ------------------*/
+
+h1 {
+	text-align: center;
+}
+
+main {
+	padding: 0;
+}
+.main-wrap{
+	height: 100vh;
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	background: url(../imagenes/paseo.jpg);
+	background-size: cover;
+	background-position: center;
+	--margin: 1em 0;
+}
+
+.main-wrap-caption-box {
+	background: #fff;
+	text-align: center;
+	width: 40%;
+	margin: 1em;
+	margin: 5em auto auto 5em ;
+}
+
+/*------------- FOOTER ------------------*/
+
+
+footer {
+	background: #2A2A2A;
+	color: #FFF;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 2em 5em 3em 5em;
+}
+
+footer a {
+	color: #FFF;
+}
+
+footer .actions {
+	padding: 0;
+}
+
+footer .actions > li {
+	list-style: none;
+}
+
+footer .button {
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	border-radius: 8px;
+	display: inline-block;
+	text-decoration: none;
+	padding: 1em;
+	background-color: transparent;
+	color: #FFF !important;
+}
+footer .button:hover {
+	background-color: rgba(255, 255, 255, 0.075);
+}
+
+footer > section {
+	width: calc(50% - 3em);
+	margin-left: 3em;
+}
+
+.go_top {
+	background: #FFF;
+	box-shadow: 0 4px 4px rgba(51,51,51,.04),0 4px 56px rgba(51,51,51,.16);
+	padding: 1em;
+	position: fixed;
+	bottom: 0;
+	right: 1em;
+}
+
+.go_top a {
+	color: #000;
+}
+
+dl.alt::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+dl.alt dt {
+  display: block;
+  width: 3em;
+  margin: 0;
+  clear: left;
+  float: left;
+  font-weight: bold;
+}
+
+dl.alt dd {
+  margin: 0 0 0.85em 5.5em;
+}
+
+dl.alt dd a {
+	text-decoration: none;
+}
+
+
+.footer-logos {
+    display: flex;
+	align-items: center;
+	text-align: center;
+}
+
+.footer-logos .flex-50 {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-logos .flex-50 a {
+    display: block;
+    text-align: center;
+}
+
+.footer-logos .flex-50 img {
+    max-width: 100%;
+    height: auto;
+}
+
+.logo-eb {
+	height: 156px !important;
+}
+
+.footer-copyright {
+	display: block;
+	width: 100%;
+}
